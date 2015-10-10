@@ -1,0 +1,20 @@
+/* This seems to be a good option for searching for a string of text (such as our html tags) within either a bufferedReader stream
+or a text file...whichever we decide to do. Check it out and lemme know what you think.
+*/
+
+File file = new File(path);
+try {
+  BufferedReader br = new BufferedReader(new FileReader(file));
+  String line;
+  int appearances = 0;
+  while ((line = br.readLine()) != null) {
+      if (line.contains("Hello")) {
+         appearances++;
+      }
+  }
+} catch (FileNotFoundException e) {
+    e.printStackTrace();
+} catch (IOException e) {
+    e.printStackTrace();
+}
+System.out.println("Found " + appearances);
