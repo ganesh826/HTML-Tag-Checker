@@ -7,7 +7,7 @@ public class URLReader {
 
     public static void main(String[] args) throws Exception {
 
-        URL oracle = new URL("https://www.twitter.com/");
+        URL oracle = new URL("http://www.fishshell.com");
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 
@@ -49,7 +49,8 @@ public class URLReader {
                 if (closingTag.equals(openingTag)) {
                   System.out.println(openingTag + " -- " + closingTag);
                 } //end if
-                else {
+                else { //This doesn't seem to work if there are two tags next to each other. for example,
+                    //<li><a>
                   System.out.println("Uh oh....");
                   System.out.println("-------------------");
                   System.out.println(openingTag + " -- " + closingTag);
