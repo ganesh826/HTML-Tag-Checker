@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -12,8 +13,12 @@ public class GUI extends JFrame{
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JButton button1 = new JButton("Run ");
 
+        JTextField URLtext = new JTextField("Enter URL Here");
+        String getURL = URLtext.getText();
         JPanel panel = new JPanel();
+        panel.add(URLtext);
         panel.add(button1);
+
         add(panel);
 
         button1.addActionListener(new ActionListener() {
