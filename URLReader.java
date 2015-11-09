@@ -7,7 +7,7 @@ public class URLReader {
 
     public static void main(String[] args) throws Exception {
 
-        URL oracle = new URL("https://www.twitter.com/");
+        URL oracle = new URL("https://twitter.com/");
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 
@@ -17,12 +17,24 @@ public class URLReader {
         String openingTag;
         String inputLine;
         boolean spaceReached;
+        boolean selfClosing;
         char[] inputArray;
+        String[] selfClosingTagArray = {"<area>", "<base>", "<br>", "<col>", 
+          "<embed>", "<hr>", "<img>", "<input>", "<keygen>", "<link>", 
+          "<menuitem>", "<meta>", "<param>", "<source>", "<track>", "<wbr>"};
+        /*
+         Self closing tags aka void elements taken from W3 Schools:
+          >  http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements
+        */
 
+
+        int counter = 0;
         while ((inputLine = in.readLine()) != null) { // Go through each line
 
+          counter++;
           closingTag = "";
           openingTag = "";
+          
           inputArray = inputLine.toCharArray(); 
           // I found it easier to iterate through an array of characters to look for tags.
 
@@ -30,6 +42,8 @@ public class URLReader {
 
             if (inputArray[i] == '<') {
               if (inputArray[i + 1] == '/') {
+                openingTag = s.pop();
+                // pop off the opening tag for comparrison
                 closingTag += "<"; 
                 // closing tag is stored without the '/' so it can be easily compared to the opening.
 
@@ -48,13 +62,17 @@ public class URLReader {
                 // This section still needs some work
                 if (closingTag.equals(openingTag)) {
                   System.out.println(openingTag + " -- " + closingTag);
-                } //end if
+                  closingTag = "";
+                  openingTag = "";
+                  // Reset the tags to allow for mutiple tags per row
+                } // end if
                 else {
-                  System.out.println("Uh oh....");
+                  System.out.println("\nError Line " + counter +"....");
+                  // I don't think the line counter works...
                   System.out.println("-------------------");
                   System.out.println(openingTag + " -- " + closingTag);
-                  System.out.println("-------------------");
-                }
+                  System.out.println("-------------------\n");
+                } // end else
 
               } //end if
 
@@ -77,12 +95,29 @@ public class URLReader {
                     spaceReached = true;
                   } //end if
 
-                  if (inputArray[j] == '>' && inputArray[j-1] != '/') {
+                  if (inputArray[j] == '>' && openingTag.charAt(1)!='!') {
                     // This finds the end of the tag, and only pushes it if it is
                     // not a self-closing tag like <meta>, <br>, etc.
 
                       openingTag += inputArray[j];
-                      s.push(openingTag);
+
+                      selfClosing = false;
+
+                      for (String tag : selfClosingTagArray) {
+                        // Check if the opening tag is a self-closing tag
+                        if (openingTag.equals(tag)){
+                          selfClosing = true;
+                        } // end if
+                      } // end for
+
+                      if (!selfClosing) {
+                        // Validate that the tag is not self closing before pushing
+                        s.push(openingTag);
+                        openingTag = "";
+                        closingTag = "";
+                        // Reset the tags to allow for mutiple tags per row
+                      } //end if
+
                       break;
                   } //end if
 
