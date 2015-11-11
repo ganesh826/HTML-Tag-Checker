@@ -61,7 +61,7 @@ public class URLReader {
                 // Check the last opening tag after a closing tag has been found 
                 // This section still needs some work
                 if (closingTag.equals(openingTag)) {
-                  System.out.println(openingTag + " -- " + closingTag);
+                  //System.out.println(openingTag + " -- " + closingTag);
                   closingTag = "";
                   openingTag = "";
                   // Reset the tags to allow for mutiple tags per row
@@ -96,8 +96,8 @@ public class URLReader {
                   } //end if
 
                   if (inputArray[j] == '>' && openingTag.charAt(1)!='!') {
-                    // This finds the end of the tag, and only pushes it if it is
-                    // not a self-closing tag like <meta>, <br>, etc.
+                    // This finds the end of the tag, and only continues it if it is
+                    // not a comment.
 
                       openingTag += inputArray[j];
 
@@ -113,10 +113,12 @@ public class URLReader {
                       if (!selfClosing) {
                         // Validate that the tag is not self closing before pushing
                         s.push(openingTag);
-                        openingTag = "";
-                        closingTag = "";
+                        //System.out.println(openingTag);
                         // Reset the tags to allow for mutiple tags per row
                       } //end if
+                      openingTag = "";
+                      closingTag = "";
+
 
                       break;
                   } //end if
