@@ -7,7 +7,7 @@ public class URLReader {
 
     public static void main(String[] args) throws Exception {
 
-        URL oracle = new URL("https://twitter.com/");
+        URL oracle = new URL("http://localhost/trial.html");
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 
@@ -17,10 +17,11 @@ public class URLReader {
         String openingTag;
         String inputLine;
         boolean spaceReached;
+        boolean isClosed;
         boolean selfClosing;
         char[] inputArray;
-        String[] selfClosingTagArray = {"<area>", "<base>", "<br>", "<col>", 
-          "<embed>", "<hr>", "<img>", "<input>", "<keygen>", "<link>", 
+        String[] selfClosingTagArray = {"<area>", "<base>",  "<br>", "<br/>", "<col>", 
+          "<embed>", "<hr>","<hr/>", "<img>", "<input>", "<keygen>", "<link>", 
           "<menuitem>", "<meta>", "<param>", "<source>", "<track>", "<wbr>"};
         /*
          Self closing tags aka void elements taken from W3 Schools:
@@ -29,7 +30,9 @@ public class URLReader {
 
 
         int counter = 0;
+        PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
         while ((inputLine = in.readLine()) != null) { // Go through each line
+          writer.println(inputLine);
 
           counter++;
           closingTag = "";
@@ -62,6 +65,9 @@ public class URLReader {
                 // This section still needs some work
                 if (closingTag.equals(openingTag)) {
                   //System.out.println(openingTag + " -- " + closingTag);
+                  System.out.println("------SUCCESS-----");
+                  System.out.println(openingTag + " -- " + closingTag);
+                  System.out.println("-------------------\n");
                   closingTag = "";
                   openingTag = "";
                   // Reset the tags to allow for mutiple tags per row
@@ -82,6 +88,7 @@ public class URLReader {
 
                 openingTag += "<";
                 spaceReached = false;
+                isClosed  = false;
                 // spaceReached is used to find the end of the tag name and the start of 
                 // things like id, name, etc. We dont want to store these things, so
                 // we can just skip over them.
@@ -113,6 +120,8 @@ public class URLReader {
                       if (!selfClosing) {
                         // Validate that the tag is not self closing before pushing
                         s.push(openingTag);
+                        System.out.println("Opening: " +openingTag);
+                        isClosed = true;
                         //System.out.println(openingTag);
                         // Reset the tags to allow for mutiple tags per row
                       } //end if
@@ -123,7 +132,7 @@ public class URLReader {
                       break;
                   } //end if
 
-                  else if (!spaceReached) {
+                  else if (!spaceReached && !isClosed) {
                     // If it's not the end of the tag and a space has not been found, 
                     // the string is updated with the new character
 
@@ -137,6 +146,7 @@ public class URLReader {
 
         } //end while
 
+        writer.close();
 
 
         /*
