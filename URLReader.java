@@ -7,7 +7,7 @@ public class URLReader {
 
     public static void main(String[] args) throws Exception {
 
-        URL oracle = new URL("http://localhost/trial.html");
+        URL oracle = new URL("http://ubuntuforums.org/index.php");
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 
@@ -17,7 +17,6 @@ public class URLReader {
         String openingTag;
         String inputLine;
         boolean spaceReached;
-        boolean isClosed;
         boolean selfClosing;
         char[] inputArray;
         String[] selfClosingTagArray = {"<area>", "<base>",  "<br>", "<br/>", "<col>", 
@@ -65,9 +64,9 @@ public class URLReader {
                 // This section still needs some work
                 if (closingTag.equals(openingTag)) {
                   //System.out.println(openingTag + " -- " + closingTag);
-                  System.out.println("------SUCCESS-----");
-                  System.out.println(openingTag + " -- " + closingTag);
-                  System.out.println("-------------------\n");
+                  //System.out.println("------SUCCESS-----");
+                  //System.out.println(openingTag + " -- " + closingTag);
+                  //System.out.println("-------------------\n");
                   closingTag = "";
                   openingTag = "";
                   // Reset the tags to allow for mutiple tags per row
@@ -88,7 +87,6 @@ public class URLReader {
 
                 openingTag += "<";
                 spaceReached = false;
-                isClosed  = false;
                 // spaceReached is used to find the end of the tag name and the start of 
                 // things like id, name, etc. We dont want to store these things, so
                 // we can just skip over them.
@@ -120,8 +118,6 @@ public class URLReader {
                       if (!selfClosing) {
                         // Validate that the tag is not self closing before pushing
                         s.push(openingTag);
-                        System.out.println("Opening: " +openingTag);
-                        isClosed = true;
                         //System.out.println(openingTag);
                         // Reset the tags to allow for mutiple tags per row
                       } //end if
@@ -131,8 +127,13 @@ public class URLReader {
 
                       break;
                   } //end if
+                  else if (inputArray[j] == '>' && openingTag.charAt(1)=='!') {
+                      openingTag = "";
+                      closingTag = "";
+                      break;
+                  }
 
-                  else if (!spaceReached && !isClosed) {
+                  else if (!spaceReached) {
                     // If it's not the end of the tag and a space has not been found, 
                     // the string is updated with the new character
 
