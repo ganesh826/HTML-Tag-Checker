@@ -116,8 +116,7 @@ public class URLReader {
 
     public static void main(String[] args) throws Exception {
 
-        //URL oracle = new URL("http://woodyatrandom.com/recommend.php?film=27");
-        URL oracle = new URL("https://www.google.com/");
+        URL oracle = new URL("http://woodyatrandom.com/recommend.php?film=14");
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 
