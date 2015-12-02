@@ -1,4 +1,5 @@
 
+import java.awt.*;
 import java.net.*;
 import java.io.*;
 import java.util.Stack;
@@ -29,7 +30,7 @@ public class URLReader {
 
 
         int counter = 0;
-        PrintWriter writer = new PrintWriter("the-file-name.txt", "UTF-8");
+        PrintWriter writer = new PrintWriter("RawHTML.txt", "UTF-8");
         while ((inputLine = in.readLine()) != null) { // Go through each line
           writer.println(inputLine);
 
@@ -45,7 +46,7 @@ public class URLReader {
             if (inputArray[i] == '<') {
               if (inputArray[i + 1] == '/') {
                 openingTag = s.pop();
-                // pop off the opening tag for comparrison
+                // pop off the opening tag for comparison
                 closingTag += "<"; 
                 // closing tag is stored without the '/' so it can be easily compared to the opening.
 
@@ -147,66 +148,18 @@ public class URLReader {
 
         } //end while
 
+
+        //Opens the text file in default text editor
         writer.close();
 
-
-        /*
-         a better way to do this would be to pop a div when you get a /div 
-         because it would let you keep better track of both the html doc's structure
-         and your position on the page. All this logic tells us is if there is an incorrect number
-         of opening and closing div tags. It might be useful though idk 
-         The code below might work..mostly just so i can remember my thinking lol
-         
-         
-         while ((inputLine = in.readLine()) != null) {
-            if (inputLine.contains("div"))
-                s.push("div");
-            if(inputLine.contains("/div"))
-                s2.pop();
-            System.out.println(inputLine); // This could be erased if you don't want to see the html in console
+        //path to file
+        File file = new File("/home/devon/ideaProjects/htmlProject/RawHTML.txt");
+        Desktop desktop = null;
+        if (Desktop.isDesktopSupported()) {
+            desktop = Desktop.getDesktop();
         }
-         
-
-        Your old code ##############
-
-        String inputLine;
-        Stack s = new Stack();
-        Stack s2 = new Stack();
-        while ((inputLine = in.readLine()) != null) {
-            if (inputLine.contains("div"))
-                s.push("div");
-            if(inputLine.contains("/div"))
-                s2.push("/div");
-            System.out.println(inputLine);
-        }
-        try {
-            while(!s.empty()||!s2.empty()) {
-                System.out.println(s.pop()+" ------ "+s2.pop());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        ----------------------------------------------------------------------------------------
-
-          All right, finally got a chance to dive into this. A couple things I notice right away:
-
-          1) The point of using the stack would be to compare the closing tags with 
-          the last pushed opening tag and make sure they match. For example, you
-          find a closing </div>, and you pop off the stack to make sure an opening
-          <div> was the last thing pushed. Since we don't need to store the closing value, 
-          we should be able to get away with just one stack.
-
-          2) The way you're locating the tags is going to cause problems later on.
-          We should design the program to find tags regardless of their text. The
-          most obvious way to do this is to look for the angle brackets <>.
-
-          My above code seems to be working for a normal html file. There are some 
-          edge cases we'll have to take into account. It's throwing a lot of errors
-          for big sites like Twitter, but working for basic html files. I'm a beer
-          too far in to fix it right now, but we're at least moving forward.
+        desktop.open(file);
 
 
-         */
     }
 }
