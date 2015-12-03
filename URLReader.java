@@ -28,6 +28,9 @@ public class URLReader {
 
     public static boolean openHTMLFile(String fileName) throws IOException {
       File file = new File(fileName);
+      if(!file.exists()) {
+          file.createNewFile();
+      }
 
       Desktop desktop = null;
 
