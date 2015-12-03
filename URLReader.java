@@ -41,16 +41,6 @@ public class URLReader {
     }
 
 
-    public static String flagErrors(String openingTag, String closingTag) {
-
-      String result = "\n<!--\n   --Error Found on Line Above--\n" +
-        "Found opening tag " + openingTag + " closed by " + closingTag +
-        "\nPlease fix and try again\n-->\n";
-
-      return result;
-    }
-
-
     public static void main(String[] args) throws Exception {
 
       Parser woodyAllenSite = new Parser("http://woodyatrandom.com/recommend.php?film=14");
