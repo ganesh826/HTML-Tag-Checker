@@ -63,6 +63,8 @@ public class Parser {
               errorText += "-------------------\n";
               errorFound = true;
               errorFlag = flagErrors(openingTag, closingTag);
+              counter += 6;
+              //counter has to account for the errorFlag text
 
             } // end else
 
