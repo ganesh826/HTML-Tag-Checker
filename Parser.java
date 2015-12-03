@@ -23,6 +23,7 @@ public class Parser {
 
     boolean errorFound = false;
     String errorFlag = null;
+    String errorText;
     String closingTag;
     String openingTag;
     String inputLine;
@@ -56,10 +57,10 @@ public class Parser {
             if (closingTag.equals(openingTag)) {
             } // end if
             else {
-              System.out.println("\nError Line " + counter +"....");
-              System.out.println("-------------------");
-              System.out.println(openingTag + " -- " + closingTag);
-              System.out.println("-------------------\n");
+              errorText = "\nError Line " + counter +"....";
+              errorText += "-------------------";
+              errorText += openingTag + " -- " + closingTag;
+              errorText += "-------------------\n";
               errorFound = true;
               errorFlag = flagErrors(openingTag, closingTag);
 
