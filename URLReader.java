@@ -1,6 +1,7 @@
 package htmlProject;
 import java.awt.*;
 import java.io.*;
+import java.util.Scanner;
 
 public class URLReader {
 
@@ -43,11 +44,18 @@ public class URLReader {
       return true;
     }
 
-
+    public static String getURL(){
+      System.out.println("Enter web address below. Note: requires hhtp header");
+      Scanner scan = new Scanner(System.in);
+      String url = scan.nextLine();
+      return url;
+    }
     public static void main(String[] args) throws Exception {
 
-      Parser woodyAllenSite = new Parser("http://woodyatrandom.com/recommend.php?film=14");
-      String[] results = woodyAllenSite.parseSiteForErrors();
+
+
+      Parser website = new Parser(getURL());
+      String[] results = website.parseSiteForErrors();
       String checkedSite = results[0];
       String errors = results[1];
       String filename = "RawHTML.txt";

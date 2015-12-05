@@ -53,6 +53,7 @@ public class Parser {
 
             closingTag = formatClosingTag(inputArray, i);
 
+            //Empty IF???
             if (closingTag.equals(openingTag)) {
             } // end if
             else {
