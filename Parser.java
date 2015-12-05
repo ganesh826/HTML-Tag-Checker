@@ -1,4 +1,3 @@
-package htmlProject;
 import java.net.*;
 import java.io.*;
 import java.util.Stack;
@@ -57,7 +56,7 @@ public class Parser {
             if (closingTag.equals(openingTag)) {
             } // end if
             else {
-              errorOutput = "\nError Line " + counter +"....";
+              errorOutput += "\nError Line " + counter +"....";
               errorOutput += "-------------------";
               errorOutput += openingTag + " -- " + closingTag;
               errorOutput += "-------------------\n";
@@ -132,7 +131,11 @@ public class Parser {
         spaceReached = true;
       } //end if
 
-      if (inputArray[j] == '>' && openingTag.charAt(1)!='!') {
+      if (inputArray[j] == '>' && openingTag.charAt(1)=='!') {
+        return null;
+      }
+
+      else if (inputArray[j] == '>' && openingTag.charAt(1)!='!') {
         // This finds the end of the tag, and only continues it if it is
         // not a comment.
 
@@ -150,10 +153,6 @@ public class Parser {
 
       } //end if
 
-      else if (inputArray[j] == '>' && openingTag.charAt(1)=='!') {
-        return null;
-      }
-
       else if (!spaceReached) {
         // If it's not the end of the tag and a space has not been found, 
         // the string is updated with the new character
@@ -161,6 +160,9 @@ public class Parser {
         openingTag += inputArray[j];
       }  //end if
     } // end for
+    if (openingTag.length() < 2) {
+      openingTag = null;
+    }
     return openingTag;
   } //end formatOpeningTag
 
