@@ -16,7 +16,7 @@ public class Parser {
 
     URL oracle = new URL(websiteURL);
     BufferedReader in = new BufferedReader(
-        new InputStreamReader(oracle.openStream()));
+            new InputStreamReader(oracle.openStream()));
 
     Stack<String> s = new Stack<String>();
 
@@ -39,11 +39,10 @@ public class Parser {
       closingTag = "";
       openingTag = "";
 
-      inputArray = inputLine.toCharArray(); 
+      inputArray = inputLine.toCharArray();
       // I found it easier to iterate through an array of characters to look for tags.
 
       for (int i = 0; i < inputArray.length; i++) {
-
         if (inputArray[i] == '<') {
           if (inputArray[i + 1] == '/') {
             // if the second character is a /, it must be a closing tag
@@ -58,7 +57,6 @@ public class Parser {
 
             closingTag = formatClosingTag(inputArray, i);
 
-            //Empty IF???
             if (!closingTag.equals(openingTag)) {
               errorOutput += "\nError Line " + counter +"....";
               errorOutput += "-------------------";
@@ -84,6 +82,14 @@ public class Parser {
       } //end for
 
     } //end while
+    while (s.size() > 0) {
+      openingTag = s.pop();
+      errorOutput += "\nError ";
+      errorOutput += "-------------------";
+      errorOutput += openingTag + " Was no closed ";
+      errorOutput += "-------------------\n";
+
+    }
     if (errorOutput.length() == 0) {
       errorOutput += "No errors found! Well done!";
     }
@@ -97,25 +103,25 @@ public class Parser {
   }
 
   public static boolean isSelfClosing(String openingTag) {
-      String[] selfClosingTagArray = {"<area>", "<base>",  "<br>", "<br />", "<br/>", "<col>", 
-        "<embed>", "<hr>","<hr/>", "<hr /", "<img>", "<input>", "<keygen>", "<link>", 
-        "<menuitem>", "<meta>", "<param>", "<source>", "<track>", "<wbr>"};
+    String[] selfClosingTagArray = {"<area>", "<base>",  "<br>", "<br />", "<br/>", "<col>",
+            "<embed>", "<hr>","<hr/>", "<hr /", "<img>", "<input>", "<keygen>", "<link>",
+            "<menuitem>", "<meta>", "<param>", "<source>", "<track>", "<wbr>"};
       /*
          Self closing tags aka void elements taken from W3 Schools:
          >  http://www.w3.org/html/wg/drafts/html/master/syntax.html#void-elements
          */
 
-      boolean selfClosing = false;
+    boolean selfClosing = false;
 
-      for (String tag : selfClosingTagArray) {
-        // Check if the opening tag is a self-closing tag
-        if (openingTag.equals(tag)){
-          selfClosing = true;
-        } // end if
-      } // end for
+    for (String tag : selfClosingTagArray) {
+      // Check if the opening tag is a self-closing tag
+      if (openingTag.equals(tag)){
+        selfClosing = true;
+      } // end if
+    } // end for
 
-      return selfClosing;
-    }
+    return selfClosing;
+  }
 
 
   public static String formatOpeningTag(char[] inputArray, int i){
@@ -172,7 +178,7 @@ public class Parser {
 
 
   public static String formatClosingTag(char[] inputArray, int i){
-    String closingTag = "<"; 
+    String closingTag = "<";
     // closing tag is stored without the '/' so it can be easily compared to the opening.
 
     for (int j = i+2; j < inputArray.length; j++) {
@@ -190,8 +196,8 @@ public class Parser {
 
   public static String flagErrors(String openingTag, String closingTag) {
     String result = "\n<!--\n   --Error Found on Line Above--\n" +
-      "Found opening tag " + openingTag + " closed by " + closingTag +
-      "\nPlease fix and try again\n-->\n";
+            "Found opening tag " + openingTag + " closed by " + closingTag +
+            "\nPlease fix and try again\n-->\n";
     return result;
   }
 
