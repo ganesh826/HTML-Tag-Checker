@@ -47,6 +47,7 @@ public class Parser {
         if (inputArray[i] == '<') {
           if (inputArray[i + 1] == '/') {
             // if the second character is a /, it must be a closing tag
+
             if (s.size() != 0) {
               openingTag = s.pop();
               // pop off the opening tag for comparison
