@@ -54,7 +54,7 @@ public class URLReader {
 
 
       //Parser website = new Parser(getURL());
-      Parser website = new Parser("http://www.siu.edu/");
+      Parser website = new Parser("http://www.craigslist.com");
       String[] results = website.parseSiteForErrors();
       String checkedSite = results[0];
       String errors = results[1];

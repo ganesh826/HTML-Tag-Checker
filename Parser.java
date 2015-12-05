@@ -53,9 +53,7 @@ public class Parser {
             closingTag = formatClosingTag(inputArray, i);
 
             //Empty IF???
-            if (closingTag.equals(openingTag)) {
-            } // end if
-            else {
+            if (!closingTag.equals(openingTag)) {
               errorOutput += "\nError Line " + counter +"....";
               errorOutput += "-------------------";
               errorOutput += openingTag + " -- " + closingTag;
@@ -65,7 +63,7 @@ public class Parser {
               counter += 6;
               //counter has to account for the errorFlag text
 
-            } // end else
+            } // end if
 
           } //end if
 
@@ -160,7 +158,7 @@ public class Parser {
         openingTag += inputArray[j];
       }  //end if
     } // end for
-    if (openingTag.length() < 2) {
+    if (openingTag.length() < 2 || openingTag.charAt(1)=='!' || openingTag != "<" || openingTag != "<=" ) {
       openingTag = null;
     }
     return openingTag;
