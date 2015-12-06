@@ -1,3 +1,10 @@
+/*
+CS 220 Final Project
+HTML Parser and Tag Checker
+
+Sam Messina, Devon Guinn, & Ganesh Koripalli
+ */
+
 import java.net.*;
 import java.io.*;
 import java.util.Stack;
