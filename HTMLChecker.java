@@ -7,6 +7,7 @@ Sam Messina, Devon Guinn, & Ganesh Koripalli
 
         import java.awt.*;
         import java.io.*;
+        import java.util.Scanner;
 
 public class HTMLChecker {
 
@@ -72,32 +73,37 @@ public class HTMLChecker {
 
     public static void main(String[] args) throws Exception {
 
-        Parser siu = new Parser("http://www.siu.edu");
-        Parser craigslist = new Parser("https://carbondale.craigslist.org/");
-        Parser samsWebsite = new Parser("http://woodyatrandom.com/filmography.php");
-        Parser reddit = new Parser("https://www.reddit.com/");
+        Parser site = new Parser("http://www.siu.edu");
+        Scanner scan = new Scanner(System.in);
+        String url;
 
         // A new Parser object is created. This object will parse our site for errors.
 
-        String[] results = samsWebsite.parseSiteForErrors();
-        // Check the site for errors. See Parser for details on the method.
-        // Note: change the Parser object called here to change the site that is checked.
+        while (true) {
+          System.out.println("Enter the url of the site (including http://)");
+          site = new Parser(scan.nextLine());
 
-        String checkedSite = results[0];
-        // The first element is the HTML text
 
-        String errors = results[1];
-        // The second element is the errors
+          String[] results = site.parseSiteForErrors();
+          // Check the site for errors. See Parser for details on the method.
+          // Note: change the Parser object called here to change the site that is checked.
 
-        String filename = "RawHTML.html";
-        // Write to and open the html file
-        printToTextFile(filename, checkedSite);
-        openFile(filename);
+          String checkedSite = results[0];
+          // The first element is the HTML text
 
-        filename = "Errors.txt";
-        // Write to and open the error file
-        printToTextFile(filename, errors);
-        openFile(filename);
+          String errors = results[1];
+          // The second element is the errors
+
+          String filename = "RawHTML.txt";
+          // Write to and open the html file
+          printToTextFile(filename, checkedSite);
+          openFile(filename);
+
+          filename = "Errors.txt";
+          // Write to and open the error file
+          printToTextFile(filename, errors);
+          openFile(filename);
+        }
 
     }
 }
