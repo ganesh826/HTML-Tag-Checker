@@ -1,22 +1,17 @@
-#Our HTML Project!
+#HTML Tag Checker
 
-Hey dudes, I thought I'd throw up some git resources for y'all, so we can work on this thing. For our purposes, we should have it pretty simple. Since there's only three of us, we can probably all just work off the "master" branch. That saves us having to worry about branches or anything. 
+This was a school project to conclude a data structures and algorithms course.
 
-After cloning the repository, you really only need four things:
+Code written by Sam Messina and Devon Guinn.
 
-##add
-The add command works like "save". It allows you to write any changes to your local branch. You may add as often as you like, and can either add a specific file ("git add myfile.txt"), or all the files in the directory ("git add *").
+##What it is
 
-##commit
-Commits usually happen at the end of a work session, or after completing a new feature/method/etc. The commit is what will be pushed to the master repository when the time comes. The commit message should reflect what you added/changed, and will be visible to everyone.
+Our goal was to create a tag checker for html documents. We use a stack to store opening tags as they are found and check them against closing tags as they come up. 
 
-##push
-Pushing will send all of your commits to the master repository. If the master repository has been changed since your last pull, you will be prompted to merge the two versions.
+##How to use it
+It's written in java, so you will need the JRE to run the program. Once you run the program, you can simply input the URL of the document you are trying to check. This can be a local file path if preferred. The program will run automatically from there, and will open up two files: the errors found, and the original HTML document with errors pointed out in comments.
 
-##pull
-The pull command pulls all the work on the master repository to your local machine. If you have unpushed commits, you will be prompted to push them before you pull.
+##That's it!
 
-If you want to read some more on all this, this guide is pretty good: https://rogerdudler.github.io/git-guide/
+This was a fun project for us. If you want to try it out, be my guest!
 
-
-If you want to practice, feel free to use this file and play around with it!
